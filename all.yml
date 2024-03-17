@@ -1,0 +1,32 @@
+---
+- name: Налаштування сервера
+  hosts: ваш_хост
+  become: true
+  tasks:
+    - name: Оновлення системи
+      apt:
+        update_cache: yes
+      tags: 
+        - system_update
+
+    - name: Встановлення nginx
+      apt:
+        name: nginx
+        state: present
+      tags: 
+        - install_nginx
+
+    - name: Встановлення VPN сервера
+      apt:
+        name: openvpn
+        state: present
+      tags: 
+        - install_vpn_server
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      tags: 
+        - restart_nginx
